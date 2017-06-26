@@ -110,6 +110,8 @@ var MentionDirective = (function () {
                 if (event.keyCode === KEY_BACKSPACE && pos > 0 && (pos - 1) != this.startPos) {
                     this.searchList.hidden = this.stopSearch;
                     pos--;
+                    if (this.timer)
+                        clearTimeout(this.timer);
                 }
                 else if (event.keyCode === KEY_BACKSPACE && (pos - 1) == this.startPos) {
                     this.searchList.hidden = true;
@@ -177,6 +179,9 @@ var MentionDirective = (function () {
                                 _this.items = response;
                                 if (_this.items.length) {
                                     _this.showSearchList(nativeElement);
+                                }
+                                else {
+                                    _this.searchList.hidden = true;
                                 }
                             });
                         }, 500);

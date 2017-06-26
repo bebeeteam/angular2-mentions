@@ -131,6 +131,7 @@ export class MentionDirective {
         if (event.keyCode === KEY_BACKSPACE && pos > 0 && (pos - 1) != this.startPos) {
           this.searchList.hidden = this.stopSearch;
           pos--;
+          if (this.timer) clearTimeout(this.timer);
         } else if (event.keyCode === KEY_BACKSPACE && (pos - 1) == this.startPos) {
           this.searchList.hidden = true;
           this.stopSearch = true;
@@ -197,7 +198,9 @@ export class MentionDirective {
                   this.items = response;
                   if (this.items.length) {
                     this.showSearchList(nativeElement);
-                  }                              
+                  } else {
+                    this.searchList.hidden = true;
+                  }                             
                 }
               );
             }, 500);
